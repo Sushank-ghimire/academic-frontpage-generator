@@ -231,7 +231,7 @@ const CreateFrontPage = () => {
           </div>
         </div>
 
-        <div className="xl:w-1/2 w-full h-screen border rounded-xl bg-background overflow-hidden shadow-sm">
+        <div className="xl:w-1/2 w-full h-[50vh] md:h-screen border rounded-xl bg-background overflow-hidden shadow-sm">
           {previewForm ? (
             <IndexPage form={previewForm} />
           ) : (

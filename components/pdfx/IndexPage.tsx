@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   logo: {
-    width: 90,
-    height: 90,
+    width: 100,
+    height: 100,
     marginVertical: 8,
     alignSelf: "center",
     objectFit: "contain",
@@ -92,6 +92,13 @@ const styles = StyleSheet.create({
     height: 100,
     backgroundColor: "black",
     borderRadius: 2,
+  },
+  lines: {
+    width: 115,
+    height: 115,
+    marginVertical: 8,
+    alignSelf: "center",
+    objectFit: "contain",
   },
   reportType: {
     textAlign: "center",
@@ -199,9 +206,11 @@ const IndexPage: React.FC<IndexPageProps> = ({ form }) => {
             </Text>
 
             <View style={styles.dividerWrap}>
-              <View style={styles.lineShort} />
+              {/*<View style={styles.lineShort} />
               <View style={styles.lineLong} />
-              <View style={styles.lineShort} />
+              <View style={styles.lineShort} />*/}
+
+              <Image src={"/lines.png"} style={styles.lines} />
             </View>
 
             <Text style={styles.reportType}>{form.reportType}</Text>
@@ -241,7 +250,7 @@ const IndexPage: React.FC<IndexPageProps> = ({ form }) => {
                   {form.universityName}
                 </Text>
                 <Text style={styles.rowText}>
-                  .................................
+                  .......................................
                 </Text>
               </View>
             </View>
