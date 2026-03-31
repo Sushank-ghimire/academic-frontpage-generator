@@ -8,7 +8,7 @@ const Header = () => {
     {
       id: "github",
       name: "Contribute",
-      href: " ",
+      href: "https://github.com/Sushank-ghimire/academic-frontpage-generator/",
     },
     {
       id: "linkedin",
