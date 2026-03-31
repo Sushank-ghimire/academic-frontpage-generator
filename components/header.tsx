@@ -27,7 +27,7 @@ const Header = () => {
   return (
     <header className="w-full flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-700">
       {/* Left: App name */}
-      <div className="flex items-center space-x-4">
+      <div className="hidden md:flex items-center space-x-4">
         <h1
           onClick={() => {
             router.push("/");
