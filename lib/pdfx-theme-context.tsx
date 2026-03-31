@@ -1,0 +1,60 @@
+"use client";
+
+import {
+  type DependencyList,
+  type ReactNode,
+  createContext,
+  useContext,
+} from "react";
+import { theme as defaultTheme } from "./pdfx-theme";
+
+type PdfxTheme = typeof defaultTheme;
+
+export const PdfxThemeContext = createContext<PdfxTheme>(defaultTheme);
+
+export interface PdfxThemeProviderProps {
+  theme?: PdfxTheme;
+  children: ReactNode;
+}
+
+export function PdfxThemeProvider({ theme, children }: PdfxThemeProviderProps) {
+  const resolvedTheme = theme ?? defaultTheme;
+  return (
+    <PdfxThemeContext.Provider value={resolvedTheme}>
+      {children}
+    </PdfxThemeContext.Provider>
+  );
+}
+
+/**
+ * Returns the active theme from context.
+ *
+ * When called outside a React render tree (for example in plain-function tests),
+ * React may throw an invalid hook error. In that case we return defaultTheme.
+ * Unexpected errors are re-thrown.
+ */
+export function usePdfxTheme(): PdfxTheme {
+  try {
+    return useContext(PdfxThemeContext);
+  } catch (error) {
+    // Suppress only known React dispatcher errors.
+    if (
+      error instanceof Error &&
+      /invalid hook call|useContext|cannot read properties of null/i.test(
+        error.message,
+      )
+    ) {
+      return defaultTheme;
+    }
+    throw error;
+  }
+}
+
+/**
+ * Calls factory() and returns the result.
+ * The deps parameter is accepted for API compatibility with existing callers.
+ */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function useSafeMemo<T>(factory: () => T, _deps: DependencyList): T {
+  return factory();
+}
