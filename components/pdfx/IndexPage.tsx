@@ -1,14 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  Document,
-  Page,
-  PDFViewer,
-  StyleSheet,
-  View,
-  Image,
-} from "@react-pdf/renderer";
+import { Document, Page, StyleSheet, View, Image } from "@react-pdf/renderer";
 import { Text } from "@/components/pdfx/text/pdfx-text";
 
 export type FrontPageForm = {
@@ -165,99 +158,97 @@ const IndexPage: React.FC<IndexPageProps> = ({ form }) => {
   }, [form.image]);
 
   return (
-    <PDFViewer style={{ width: "100%", height: "100%", color: "black" }}>
-      <Document>
-        <Page size="A4" style={styles.page}>
-          <View style={styles.card}>
-            <Text
-              style={{
-                ...styles.center,
-                ...styles.uni,
-              }}
-            >
-              {form.universityName.toUpperCase()}
-            </Text>
-            <Text
-              style={{
-                ...styles.center,
-                ...styles.institute,
-              }}
-            >
-              {form.instituteName}
-            </Text>
+    <Document>
+      <Page size="A4" style={styles.page}>
+        <View style={styles.card}>
+          <Text
+            style={{
+              ...styles.center,
+              ...styles.uni,
+            }}
+          >
+            {form.universityName.toUpperCase()}
+          </Text>
+          <Text
+            style={{
+              ...styles.center,
+              ...styles.institute,
+            }}
+          >
+            {form.instituteName}
+          </Text>
 
-            <Image src={logoSrc} style={styles.logo} />
+          <Image src={logoSrc} style={styles.logo} />
 
-            <Text
-              style={{
-                ...styles.center,
-                ...styles.college,
-              }}
-            >
-              {form.collegeName}
-            </Text>
-            <Text
-              style={{
-                ...styles.center,
-                ...styles.location,
-              }}
-            >
-              {form.collegeLocation}
-            </Text>
+          <Text
+            style={{
+              ...styles.center,
+              ...styles.college,
+            }}
+          >
+            {form.collegeName}
+          </Text>
+          <Text
+            style={{
+              ...styles.center,
+              ...styles.location,
+            }}
+          >
+            {form.collegeLocation}
+          </Text>
 
-            <View style={styles.dividerWrap}>
-              {/*<View style={styles.lineShort} />
-              <View style={styles.lineLong} />
-              <View style={styles.lineShort} />*/}
+          <View style={styles.dividerWrap}>
+            {/*<View style={styles.lineShort} />
+          <View style={styles.lineLong} />
+          <View style={styles.lineShort} />*/}
 
-              <Image src={"/lines.png"} style={styles.lines} />
+            <Image src={"/lines.png"} style={styles.lines} />
+          </View>
+
+          <Text style={styles.reportType}>{form.reportType}</Text>
+          <Text style={styles.subject}>{form.subjectName}</Text>
+
+          <View style={styles.infoSection}>
+            <View style={styles.col}>
+              <Text style={styles.colTitle}>Submitted By:</Text>
+              <Text style={styles.rowText}>Name: {form.studentName}</Text>
+              <Text style={styles.rowText}>Program: {form.program}</Text>
+              <Text style={styles.rowText}>Semester: {form.semester}</Text>
+              <Text style={styles.rowText}>Roll No.: {form.rollNumber}</Text>
+
+              <Text style={styles.rowText}>
+                Submission Date: {form.submissionDate}
+              </Text>
             </View>
 
-            <Text style={styles.reportType}>{form.reportType}</Text>
-            <Text style={styles.subject}>{form.subjectName}</Text>
-
-            <View style={styles.infoSection}>
-              <View style={styles.col}>
-                <Text style={styles.colTitle}>Submitted By:</Text>
-                <Text style={styles.rowText}>Name: {form.studentName}</Text>
-                <Text style={styles.rowText}>Program: {form.program}</Text>
-                <Text style={styles.rowText}>Semester: {form.semester}</Text>
-                <Text style={styles.rowText}>Roll No.: {form.rollNumber}</Text>
-
-                <Text style={styles.rowText}>
-                  Submission Date: {form.submissionDate}
-                </Text>
-              </View>
-
-              <View style={styles.col}>
-                <Text style={styles.colTitle}>Submitted To:</Text>
-                <Text style={styles.rowText}>{form.submittedTo}</Text>
-                <Text style={styles.rowText}>{form.department}</Text>
-                <Text
-                  style={{
-                    ...styles.rowText,
-                    ...styles.capitalize,
-                  }}
-                >
-                  {form.collegeName}
-                </Text>
-                <Text
-                  style={{
-                    ...styles.rowText,
-                    ...styles.capitalize,
-                  }}
-                >
-                  {form.universityName}
-                </Text>
-                <Text style={styles.rowText}>
-                  .......................................
-                </Text>
-              </View>
+            <View style={styles.col}>
+              <Text style={styles.colTitle}>Submitted To:</Text>
+              <Text style={styles.rowText}>{form.submittedTo}</Text>
+              <Text style={styles.rowText}>{form.department}</Text>
+              <Text
+                style={{
+                  ...styles.rowText,
+                  ...styles.capitalize,
+                }}
+              >
+                {form.collegeName}
+              </Text>
+              <Text
+                style={{
+                  ...styles.rowText,
+                  ...styles.capitalize,
+                }}
+              >
+                {form.universityName}
+              </Text>
+              <Text style={styles.rowText}>
+                .......................................
+              </Text>
             </View>
           </View>
-        </Page>
-      </Document>
-    </PDFViewer>
+        </View>
+      </Page>
+    </Document>
   );
 };
 

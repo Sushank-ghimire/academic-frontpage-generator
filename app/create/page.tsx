@@ -5,6 +5,10 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import IndexPage, { FrontPageForm } from "@/components/pdfx/IndexPage";
+import { useMobile } from "@/hooks/useMobile";
+import MobilePreview from "@/components/pdfx/MobilePreview";
+import { pdf, PDFViewer } from "@react-pdf/renderer";
+import { toast } from "sonner";
 
 const initialForm: FrontPageForm = {
   universityName: "TRIBHUVAN UNIVERSITY",
@@ -38,6 +42,37 @@ const CreateFrontPage = () => {
 
   const handleGenerate = () => {
     setPreviewForm({ ...draftForm });
+  };
+
+  const { isMobile } = useMobile();
+
+  const handleDownload = () => {
+    const promise = (async () => {
+      const blob = await pdf(<IndexPage form={draftForm} />).toBlob();
+
+      if (!blob || blob.size === 0) {
+        throw new Error("Invalid PDF");
+      }
+
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `front-page-${draftForm.program}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      URL.revokeObjectURL(url);
+
+      return "PDF Generated";
+    })();
+
+    toast.promise(promise, {
+      loading: "Generating PDF...",
+      success: "PDF Download Started",
+      error: "Failed to generate PDF",
+    });
   };
 
   return (
@@ -218,6 +253,7 @@ const CreateFrontPage = () => {
 
             <div className="flex gap-2 pt-2">
               <Button onClick={handleGenerate}>Generate Preview</Button>
+              <Button onClick={handleDownload}>Download</Button>
               <Button
                 variant="outline"
                 onClick={() => {
@@ -233,7 +269,15 @@ const CreateFrontPage = () => {
 
         <div className="xl:w-1/2 w-full h-[50vh] md:h-screen border rounded-xl bg-background overflow-hidden shadow-sm">
           {previewForm ? (
-            <IndexPage form={previewForm} />
+            isMobile ? (
+              <MobilePreview form={previewForm} />
+            ) : (
+              <PDFViewer
+                style={{ width: "100%", height: "100%", color: "black" }}
+              >
+                <IndexPage form={previewForm} />
+              </PDFViewer>
+            )
           ) : (
             <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm px-6 text-center">
               Preview will appear here after clicking “Generate Preview”.
